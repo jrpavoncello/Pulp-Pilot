@@ -57,6 +57,10 @@ namespace UnityTemplateProjects
         [Tooltip("Exponential boost factor on translation, controllable by mouse wheel.")]
         public float boost = 3.5f;
 
+        [Header("Movement Settings")]
+        [Tooltip("Base move speed.")]
+        public float speed = 10.0f;
+
         [Tooltip("Time it takes to interpolate camera position 99% of the way to the target."), Range(0.001f, 1f)]
         public float positionLerpTime = 0.2f;
 
@@ -142,17 +146,17 @@ namespace UnityTemplateProjects
             }
             
             // Translation
-            var translation = GetInputTranslationDirection() * Time.deltaTime;
+            var translation = GetInputTranslationDirection() * Time.deltaTime * this.speed;
 
             // Speed up movement when shift key held
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                translation *= 10.0f;
+                translation *= 3.0f;
             }
             
             // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
-            boost += Input.mouseScrollDelta.y * 0.2f;
-            translation *= Mathf.Pow(2.0f, boost);
+            boost += Input.mouseScrollDelta.y;
+            translation *= boost;
 
             m_TargetCameraState.Translate(translation);
 
