@@ -36,7 +36,7 @@ public class SmoothTargetFollower : MonoBehaviour
         SetCameraPosition();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // We do this in FixedUpdate because the camera uses RigidBody collisions to prevent it 
         // from going through the ground. It will causes clipping and jittering otherwise.
@@ -62,6 +62,7 @@ public class SmoothTargetFollower : MonoBehaviour
 
         this.previousLerpRate = lerp;
 
-        this.transform.LookAt(this.target.transform);
+        // Make sure the camera is pointing at the target, and that the orientation (rotation) is the same
+        this.transform.LookAt(this.target.transform, this.target.transform.up);
     }
 }
