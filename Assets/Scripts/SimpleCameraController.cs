@@ -6,18 +6,14 @@ namespace UnityTemplateProjects
     {
         class CameraState
         {
-            public float yaw;
-            public float pitch;
-            public float roll;
+            public Quaternion rotation;
             public float x;
             public float y;
             public float z;
 
             public void SetFromTransform(Transform t)
             {
-                pitch = t.eulerAngles.x;
-                yaw = t.eulerAngles.y;
-                roll = t.eulerAngles.z;
+                rotation = t.rotation;
                 x = t.position.x;
                 y = t.position.y;
                 z = t.position.z;
@@ -25,7 +21,7 @@ namespace UnityTemplateProjects
 
             public void Translate(Vector3 translation)
             {
-                Vector3 rotatedTranslation = Quaternion.Euler(pitch, yaw, roll) * translation;
+                Vector3 rotatedTranslation = rotation * translation;
 
                 x += rotatedTranslation.x;
                 y += rotatedTranslation.y;
@@ -34,10 +30,8 @@ namespace UnityTemplateProjects
 
             public void LerpTowards(CameraState target, float positionLerpPct, float rotationLerpPct)
             {
-                yaw = Mathf.Lerp(yaw, target.yaw, rotationLerpPct);
-                pitch = Mathf.Lerp(pitch, target.pitch, rotationLerpPct);
-                roll = Mathf.Lerp(roll, target.roll, rotationLerpPct);
-                
+                rotation = Quaternion.Lerp(rotation, target.rotation, rotationLerpPct);
+
                 x = Mathf.Lerp(x, target.x, positionLerpPct);
                 y = Mathf.Lerp(y, target.y, positionLerpPct);
                 z = Mathf.Lerp(z, target.z, positionLerpPct);
@@ -45,11 +39,11 @@ namespace UnityTemplateProjects
 
             public void UpdateTransform(Transform t)
             {
-                t.eulerAngles = new Vector3(pitch, yaw, roll);
+                t.rotation = rotation;
                 t.position = new Vector3(x, y, z);
             }
         }
-        
+
         CameraState m_TargetCameraState = new CameraState();
         CameraState m_InterpolatingCameraState = new CameraState();
 
@@ -85,40 +79,46 @@ namespace UnityTemplateProjects
             Vector3 direction = new Vector3();
             if (Input.GetKey(KeyCode.W))
             {
-                direction += this.transform.forward;
+                direction += Vector3.forward;
             }
+
             if (Input.GetKey(KeyCode.S))
             {
-                direction += -this.transform.forward;
+                direction += -Vector3.forward;
             }
+
             if (Input.GetKey(KeyCode.A))
             {
-                direction += -this.transform.right;
+                direction += -Vector3.right;
             }
+
             if (Input.GetKey(KeyCode.D))
             {
-                direction += this.transform.right;
+                direction += Vector3.right;
             }
-            if (Input.GetKey(KeyCode.Q))
+
+            if (Input.GetKey(KeyCode.LeftControl))
             {
-                direction += -this.transform.up;
+                direction += -Vector3.up;
             }
-            if (Input.GetKey(KeyCode.E))
+
+            if (Input.GetKey(KeyCode.Space))
             {
-                direction += this.transform.up;
+                direction += Vector3.up;
             }
+
             return direction;
         }
-        
+
         void Update()
         {
             // Exit Sample  
             if (Input.GetKey(KeyCode.Escape))
             {
                 Application.Quit();
-				#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false; 
-				#endif
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#endif
             }
 
             // Hide and lock cursor when right mouse button pressed
@@ -134,17 +134,30 @@ namespace UnityTemplateProjects
                 Cursor.lockState = CursorLockMode.None;
             }
 
+            // x=Pitch, y=Yaw, z=Roll
+            Vector3 keyRotation = new Vector3();
+
+            float roll = 0f;
+            if (Input.GetKey(KeyCode.Q))
+            {
+                roll = 1f;
+            }
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                roll = -1f;
+            }
+
             // Rotation
             if (Input.GetMouseButton(1))
             {
                 var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
-                
+
                 var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
 
-                m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;
-                m_TargetCameraState.pitch += mouseMovement.y * mouseSensitivityFactor;
+                m_TargetCameraState.rotation *= Quaternion.Euler(mouseMovement.y * mouseSensitivityFactor, mouseMovement.x * mouseSensitivityFactor, roll);
             }
-            
+
             // Translation
             var translation = GetInputTranslationDirection() * Time.deltaTime * this.speed;
 
@@ -153,7 +166,7 @@ namespace UnityTemplateProjects
             {
                 translation *= 3.0f;
             }
-            
+
             // Modify movement by a boost factor (defined in Inspector and modified in play mode through the mouse scroll wheel)
             boost += Input.mouseScrollDelta.y;
             translation *= boost;
