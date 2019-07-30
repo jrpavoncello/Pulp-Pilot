@@ -494,7 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd036276587d0d4b923fd738d978bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 0, y: -20, z: 3}
+  cameraOffset: {x: 0, y: 4, z: -20}
   target: {fileID: 1023055097}
   velocityMultiplier: {x: 0, y: 0}
   flightLerpRate: 0.7
@@ -557,13 +557,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505597662}
-  m_LocalRotation: {x: -0.056346055, y: 0.9266803, z: -0.09858525, w: -0.35828716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 851.176, y: 75.487, z: 752.472}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 12.891001, y: 222.05199, z: -1.9860001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1521502384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -579,7 +579,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 5cccaa8013502f642a8dac61b3ee3585,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 844.3151
+      value: 851.85
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 5cccaa8013502f642a8dac61b3ee3585,
         type: 3}
@@ -589,7 +589,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 5cccaa8013502f642a8dac61b3ee3585,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 745.0217
+      value: 764.4
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 5cccaa8013502f642a8dac61b3ee3585,
         type: 3}
