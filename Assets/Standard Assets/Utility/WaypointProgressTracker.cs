@@ -46,8 +46,7 @@ namespace UnityStandardAssets.Utility
 
         private float progressDistance; // The progress round the route, used in smooth mode.
         private int progressNum; // the current waypoint number, used in point-to-point mode.
-        private Vector3 lastPosition; // Used to calculate current speed (since we may not have a rigidbody component)
-        private float speed; // current speed of this object (calculated from delta since last frame)
+        private float projectedDistance; // current speed of this object (calculated from delta since last frame)
 
         // setup script properties
         private void Start()
@@ -84,32 +83,33 @@ namespace UnityStandardAssets.Utility
         {
             if (progressStyle == ProgressStyle.SmoothAlongRoute)
             {
-                // determine the position we should currently be aiming for
-                // (this is different to the current progress position, it is a a certain amount ahead along the route)
-                // we use lerp as a simple way of smoothing out the speed over time.
-                if (Time.deltaTime > 0)
-                {
-                    speed = Mathf.Lerp(speed, (lastPosition - transform.position).magnitude/Time.deltaTime,
-                                       Time.deltaTime);
-                }
-                target.position =
-                    circuit.GetRoutePoint(progressDistance + lookAheadForTargetOffset + lookAheadForTargetFactor*speed)
+                var targetPosition =
+                    circuit.GetRoutePoint(progressDistance + lookAheadForTargetOffset)
                            .position;
-                target.rotation =
-                    Quaternion.LookRotation(
-                        circuit.GetRoutePoint(progressDistance + lookAheadForSpeedOffset + lookAheadForSpeedFactor*speed)
-                               .direction);
 
+                projectedDistance = (transform.position - targetPosition).magnitude;
+
+                transform.position = 
+                    Vector3.Lerp(
+                        transform.position,
+                        circuit.GetRoutePoint(progressDistance + lookAheadForTargetOffset + lookAheadForTargetFactor*projectedDistance).position,
+                        Time.deltaTime);
+
+                transform.rotation =
+                    Quaternion.Lerp(
+                        transform.rotation,
+                        Quaternion.LookRotation(
+                            circuit.GetRoutePoint(progressDistance + lookAheadForSpeedOffset + lookAheadForSpeedFactor*projectedDistance)
+                                   .direction),
+                        Time.deltaTime);
 
                 // get our current progress along the route
                 progressPoint = circuit.GetRoutePoint(progressDistance);
-                Vector3 progressDelta = progressPoint.position - transform.position;
+                Vector3 progressDelta = progressPoint.position - target.position;
                 if (Vector3.Dot(progressDelta, progressPoint.direction) < 0)
                 {
                     progressDistance += progressDelta.magnitude*0.5f;
                 }
-
-                lastPosition = transform.position;
             }
             else
             {
@@ -132,7 +132,6 @@ namespace UnityStandardAssets.Utility
                 {
                     progressDistance += progressDelta.magnitude;
                 }
-                lastPosition = transform.position;
             }
         }
 
