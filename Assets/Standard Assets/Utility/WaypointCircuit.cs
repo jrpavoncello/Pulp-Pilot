@@ -287,13 +287,13 @@ namespace UnityStandardAssets.Utility.Inspector
                                             changedLength = true;
                                             break;
                                         case "v":
-                                            if (i < items.arraySize - 2)
+                                            if (i < items.arraySize - 1)
                                             {
                                                 items.MoveArrayElement(i, i + 1);
                                             }
                                             break;
                                         case "^":
-                                            if (i > 1)
+                                            if (i > 0)
                                             {
                                                 items.MoveArrayElement(i, i - 1);
                                             }
