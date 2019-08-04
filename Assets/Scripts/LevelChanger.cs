@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelChanger : MonoBehaviour
 {
-    private Animator animator;
-    private string levelOverride;
-    private Action callback;
-    private const string FADEOUT = "FadeOut";
-
     // Start is called before the first frame update
     void Start()
     {
@@ -64,4 +59,9 @@ public class LevelChanger : MonoBehaviour
             SceneManager.LoadScene(this.levelOverride);
         }
     }
+
+    private Animator animator;
+    private string levelOverride;
+    private Action callback;
+    private const string FADEOUT = "FadeOut";
 }
