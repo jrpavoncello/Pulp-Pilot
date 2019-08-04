@@ -4,9 +4,6 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private LevelChanger levelChanger;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +19,6 @@ public class PlayerController : MonoBehaviour
     private void OnPlayerDeath()
     {
         this.isControlEnabled = false;
-
-        levelChanger.OnReloadLevel();
     }
 
     private void ProcessInput()
