@@ -9520,6 +9520,7 @@ GameObject:
   - component: {fileID: 8951859484134946804}
   - component: {fileID: 395348307}
   - component: {fileID: 395348308}
+  - component: {fileID: 6762350564361047725}
   m_Layer: 0
   m_Name: PaperAirplane
   m_TagString: Untagged
@@ -9601,18 +9602,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 705a89cfe24e9884dbd2eb6044422be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelChanger: {fileID: 0}
   horizontalSpeedMult: 11
   verticalSpeedMult: 8
   horizontalLimit: 7
   verticalLimitUp: 3
   verticalLimitDown: 4
-  horizontalYawAdjustment: 30
-  verticalPitchAdjustment: -22.943
-  horizontalRollAdjustment: -0.8
   horizontalRollWhileMoving: -20
   horizontalYawWhileMoving: 25
   verticalPitchWhileMoving: -20
   rotationLerpRate: 0.2
+  horizontalYawAdjustment: 30
+  verticalPitchAdjustment: -22.943
+  horizontalRollAdjustment: -0.8
 --- !u!54 &395348307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9642,3 +9644,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5916128, y: 1.138587, z: 7.3434324}
   m_Center: {x: 0.006599021, y: -0.25279948, z: 0.7033916}
+--- !u!114 &6762350564361047725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088333801967760055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 106c73959bdf618428e0f91868164c23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
