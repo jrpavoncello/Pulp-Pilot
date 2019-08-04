@@ -9608,7 +9608,7 @@ MonoBehaviour:
   verticalLimitDown: 4
   horizontalYawAdjustment: 30
   verticalPitchAdjustment: -22.943
-  horizontalRollAdjustment: -0.15
+  horizontalRollAdjustment: -0.8
   horizontalRollWhileMoving: -20
   horizontalYawWhileMoving: 25
   verticalPitchWhileMoving: -20

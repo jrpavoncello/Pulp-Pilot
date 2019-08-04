@@ -15,7 +15,6 @@ public class LevelChanger : MonoBehaviour
     void Start()
     {
         this.animator = GetComponent<Animator>();
-
     }
 
     // Update is called once per frame
@@ -24,12 +23,17 @@ public class LevelChanger : MonoBehaviour
         
     }
 
-    public void BeginNextLevel()
+    public void OnLoadNextLevel()
     {
         animator.SetTrigger(FADEOUT);
     }
 
-    public void ReloadLevel(Action callback)
+    public void OnReloadLevel()
+    {
+        OnReloadLevel(null);
+    }
+
+    public void OnReloadLevel(Action callback)
     {
         animator.SetTrigger(FADEOUT);
 
@@ -40,7 +44,7 @@ public class LevelChanger : MonoBehaviour
         this.callback = callback;
     }
 
-    public void OnFadeCompleted()
+    private void OnFadeOutCompleted()
     {
         if(this.callback != null)
         {
