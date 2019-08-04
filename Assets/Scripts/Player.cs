@@ -75,23 +75,32 @@ public class Player : MonoBehaviour
 
         this.transform.localPosition = newLocalPosition;
 
+        // Start calculating the local rotation we should apply to correct for the perspective of the camera, 
+        // and to make the ship rotate when the player controls it
         float xSign = Mathf.Sign(this.transform.localPosition.x);
         float ySign = Mathf.Sign(this.transform.localPosition.y);
 
-        var distanceFromLocalOrigin = new Vector2(localPosition.x, localPosition.y).magnitude;
+        var pitchPerspectiveDelta = ySign
+                    * Mathf.Lerp(0, verticalPitchAdjustment, Mathf.Abs(newLocalPosition.y) / verticalLimitDown);
 
-        var targetRotation = Quaternion.Euler(
-                ySign 
-                    * Mathf.Lerp(0, verticalPitchAdjustment, Mathf.Abs(newLocalPosition.y) / verticalLimitDown)
-                    + verticalThrow * verticalPitchWhileMoving,
-                xSign 
-                    * Mathf.Lerp(0, horizontalYawAdjustment, Mathf.Abs(newLocalPosition.x) / horizontalLimit)
-                    + horizontalThrow * horizontalYawWhileMoving,
-                Mathf.Abs(newLocalPosition.x * newLocalPosition.y) 
+        var pitchMovingDelta = verticalThrow * verticalPitchWhileMoving;
+
+        float yawPerspectiveDelta = xSign
+                    * Mathf.Lerp(0, horizontalYawAdjustment, Mathf.Abs(newLocalPosition.x) / horizontalLimit);
+
+        float yawMovingDelta = horizontalThrow * horizontalYawWhileMoving;
+
+        float rollPerspectiveDelta = Mathf.Abs(newLocalPosition.x * newLocalPosition.y)
                     * xSign
                     * ySign
-                    * Mathf.Lerp(0, horizontalRollAdjustment, newLocalPosition.magnitude / new Vector2(horizontalLimit, verticalLimitDown).magnitude)
-                    + horizontalThrow * horizontalRollWhileMoving
+                    * Mathf.Lerp(0, horizontalRollAdjustment, newLocalPosition.magnitude / new Vector2(horizontalLimit, verticalLimitDown).magnitude);
+
+        float rollMovingDelta = horizontalThrow * horizontalRollWhileMoving;
+
+        var targetRotation = Quaternion.Euler(
+                pitchPerspectiveDelta + pitchMovingDelta,
+                yawPerspectiveDelta + yawMovingDelta,
+                rollPerspectiveDelta + rollMovingDelta
                 );
 
         this.transform.localRotation = Quaternion.Lerp(this.transform.localRotation, targetRotation, .2f);
