@@ -63,9 +63,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ProcessInput();
+    }
+
+    private void ProcessInput()
+    {
         var horizontalThrow = CrossPlatformInputManager.GetAxis("Horizontal");
         var verticalThrow = CrossPlatformInputManager.GetAxis("Vertical");
 
+        HandlePositionInput(horizontalThrow, verticalThrow);
+
+        HandleRotationInput(horizontalThrow, verticalThrow);
+    }
+
+    private Vector3 HandlePositionInput(float horizontalThrow, float verticalThrow)
+    {
         var localPosition = this.transform.localPosition;
 
         var newLocalPosition = new Vector3(
@@ -74,6 +86,13 @@ public class Player : MonoBehaviour
             localPosition.z);
 
         this.transform.localPosition = newLocalPosition;
+
+        return newLocalPosition;
+    }
+
+    private void HandleRotationInput(float horizontalThrow, float verticalThrow)
+    {
+        var newLocalPosition = this.transform.localPosition;
 
         // Start calculating the local rotation we should apply to correct for the perspective of the camera, 
         // and to make the ship rotate when the player controls it
@@ -103,6 +122,6 @@ public class Player : MonoBehaviour
                 rollPerspectiveDelta + rollMovingDelta
                 );
 
-        this.transform.localRotation = Quaternion.Lerp(this.transform.localRotation, targetRotation, .2f);
+        this.transform.localRotation = Quaternion.Lerp(this.transform.localRotation, targetRotation, this.rotationLerpRate);
     }
 }
