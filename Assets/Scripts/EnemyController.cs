@@ -23,32 +23,22 @@ public class EnemyController : MonoBehaviour
         {
             this.isDead = true;
 
+            this.scoreboard.ScoreHit(scorePerHit);
+
             // Ensures the player can't die from hitting them
             this.boxCollider.enabled = false;
 
-            SpawnExplosion();
+            SendMessage("SpawnEffects");
 
-            BehaviourHelpers.DelayInvoke(this,
-                () =>
-                {
-                    Destroy(this.gameObject);
-                },
-                timeToDeath);
+            Destroy(this.gameObject);
         }
     }
 
-    private void SpawnExplosion()
-    {
-        var newEffects = Instantiate(deathEffects, this.transform);
-
-        newEffects.SetActive(true);
-    }
+    [SerializeField]
+    private Scoreboard scoreboard;
 
     [SerializeField]
-    private GameObject deathEffects;
-
-    [SerializeField]
-    private float timeToDeath = .5f;
+    private int scorePerHit = 12;
 
     private BoxCollider boxCollider;
     private bool isDead = false;

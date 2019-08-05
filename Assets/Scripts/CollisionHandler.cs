@@ -20,7 +20,7 @@ public class CollisionHandler : MonoBehaviour
 
         StartRigidBodyDrop();
 
-        deathEffects.SetActive(true);
+        SendMessage("SpawnEffects");
 
         BehaviourHelpers.DelayInvoke(this, () =>
         {
@@ -37,9 +37,6 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField]
     private LevelChanger levelChanger;
-
-    [SerializeField]
-    private GameObject deathEffects;
 
     [SerializeField]
     private float levelLoadDelay = 1f;
