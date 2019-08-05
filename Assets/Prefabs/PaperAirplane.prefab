@@ -9731,6 +9731,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450203, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010782047964450200, guid: a6875d43b2548364e872d3ee26632665,
+        type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6875d43b2548364e872d3ee26632665, type: 3}
 --- !u!1 &6193318753199471426 stripped
