@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,6 +35,21 @@ public class PlayerController : MonoBehaviour
         HandlePositionInput(horizontalThrow, verticalThrow);
 
         HandleRotationInput(horizontalThrow, verticalThrow);
+
+        HandleFireInput();
+    }
+
+    private void HandleFireInput()
+    {
+        if(CrossPlatformInputManager.GetButtonDown("Fire1"))
+        {
+            BroadcastMessage("OnBeginFiring");
+        }
+
+        if (CrossPlatformInputManager.GetButtonUp("Fire1"))
+        {
+            BroadcastMessage("OnStopFiring");
+        }
     }
 
     private Vector3 HandlePositionInput(float horizontalThrow, float verticalThrow)

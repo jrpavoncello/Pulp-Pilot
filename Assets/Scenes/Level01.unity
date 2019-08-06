@@ -3298,5 +3298,13 @@ PrefabInstance:
       propertyPath: runtimeSpawnObject
       value: 
       objectReference: {fileID: 320102806}
+    - target: {fileID: 1086003664, guid: 18f7fa627e12c404aac018d8a17c5c88, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861002294, guid: 18f7fa627e12c404aac018d8a17c5c88, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18f7fa627e12c404aac018d8a17c5c88, type: 3}
