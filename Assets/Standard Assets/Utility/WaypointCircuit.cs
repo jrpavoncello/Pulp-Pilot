@@ -357,6 +357,23 @@ namespace UnityStandardAssets.Utility.Inspector
             }
             y += lineHeight + spacing;
 
+            // rotate waypoints
+            var rotateWaypointsRect = new Rect(x, y, inspectorWidth, lineHeight);
+            if (GUI.Button(rotateWaypointsRect, "Rotate all waypoints"))
+            {
+                var circuit = property.FindPropertyRelative("circuit").objectReferenceValue as WaypointCircuit;
+
+                var copy = new Transform[circuit.waypointList.items.Length];
+
+                circuit.waypointList.items.CopyTo(copy, 0);
+
+                for (int i = 0; i < circuit.waypointList.items.Length; i++)
+                {
+                    circuit.waypointList.items[(i + 1) % circuit.waypointList.items.Length] = copy[i];
+                }
+            }
+            y += lineHeight + spacing;
+
             // Set indent back to what it was
             EditorGUI.indentLevel = indent;
             EditorGUI.EndProperty();

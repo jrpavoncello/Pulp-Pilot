@@ -10,15 +10,21 @@ public class GunController : MonoBehaviour
     void Start()
     {
         this.gunParticles = this.GetComponent<ParticleSystem>();
+
+        StopFiring();
     }
 
-    private void OnBeginFiring()
+    public void StartFiring()
     {
-        this.gunParticles.Play();
+        ParticleSystem.EmissionModule em = this.gunParticles.emission;
+
+        em.enabled = true;
     }
 
-    private void OnStopFiring()
+    public void StopFiring()
     {
-        this.gunParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        ParticleSystem.EmissionModule em = this.gunParticles.emission;
+
+        em.enabled = false;
     }
 }

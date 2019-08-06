@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityStandardAssets.CrossPlatformInput;
 using System;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,12 +44,18 @@ public class PlayerController : MonoBehaviour
     {
         if(CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
-            BroadcastMessage("OnBeginFiring");
+            foreach(var gun in this.Guns)
+            {
+                gun.StartFiring();
+            }
         }
 
         if (CrossPlatformInputManager.GetButtonUp("Fire1"))
         {
-            BroadcastMessage("OnStopFiring");
+            foreach (var gun in this.Guns)
+            {
+                gun.StopFiring();
+            }
         }
     }
 
@@ -142,6 +149,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] [Tooltip("Compensate for the odd viewing angle when the ship is at the edge of the screen.")]
     private float horizontalRollAdjustment = -.8f;
+
+    [Header("Guns")]
+
+    [SerializeField] [Tooltip("The gun particles that will be enabled/disabled when firing.")]
+    private List<GunController> Guns;
 
     private Camera shipCamera;
     private bool isControlEnabled = true;
